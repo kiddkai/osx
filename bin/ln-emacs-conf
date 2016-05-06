@@ -1,0 +1,5 @@
+#!/bin/sh
+
+BASE="$(dirname "$0")"
+
+ln -s "$(realpath "$PWD/$BASE/../emacs.d")" "${HOME}/.emacs.d" 
