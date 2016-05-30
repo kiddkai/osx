@@ -37,8 +37,15 @@
 (use-package flycheck
   :config
   (global-flycheck-mode))
+
+(use-package flyspell
+  :config
+  (add-hook 'org-mode-hook #'flyspell-mode))
+
 (use-package hydra)
-(use-package lua-mode)
+(use-package lua-mode
+  :config
+  (setq lua-indent-level 2))
 (use-package clojure-mode)
 (use-package smartparens)
 (use-package rainbow-delimiters)
@@ -49,6 +56,28 @@
 (add-hook 'js-mode-hook #'smartparens-mode)
 (add-hook 'clojure-mode-hook #'smartparens-strict-mode)
 (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode)
+
+;;; init setting
+(setq inhibit-startup-message t)
+
+(defconst *is-a-mac* (eq system-type 'darwin))
+
+(when *is-a-mac*
+  (setq mac-command-modifier 'meta)
+  (setq mac-option-modifier 'none)
+  (setq default-input-method "MacOSX")
+  ;; Make mouse wheel / trackpad scrolling less jerky
+  (setq mouse-wheel-scroll-amount '(1
+                                    ((shift) . 5)
+                                    ((control))))
+  (dolist (multiple '("" "double-" "triple-"))
+    (dolist (direction '("right" "left"))
+      (global-set-key (read-kbd-macro (concat "<" multiple "wheel-" direction ">")) 'ignore)))
+  (global-set-key (kbd "M-`") 'ns-next-frame)
+  (global-set-key (kbd "M-h") 'ns-do-hide-emacs)
+  (global-set-key (kbd "M-˙") 'ns-do-hide-others)
+  (global-set-key (kbd "M-ˍ") 'ns-do-hide-others)
+  )
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
